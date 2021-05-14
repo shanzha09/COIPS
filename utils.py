@@ -100,7 +100,5 @@ def logger_create():
     file_handler.setLevel(logging.DEBUG)
     file_handler.setFormatter(logging.Formatter(fmt=format_, datefmt='%Y-%m-%d %H:%M:%S'))
     logger.addHandler(file_handler)
-
-
     return logger
 

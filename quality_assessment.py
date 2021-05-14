@@ -13,6 +13,8 @@ from COIPS.config import base_dir, batch_size, project_name, img_size
 from tqdm import tqdm
 from COIPS.utils import maybe_mkdir
 import shutil
+from timm.data.transforms import _pil_interp
+from SwinTransformer import build_SwinT
 
 test_dir = os.path.join(base_dir, 'processed_OCTA_images')
 device = torch.device("cuda:0")
@@ -32,15 +34,26 @@ maybe_mkdir(outstanding_dir)
 def inference(logger, size=None):
     assert size in [3, 6]
     if size == 3:
-        model = torch.load('../models/quality_assessment/seresnext101_3x3_all.pth')
+        model = build_SwinT.build_model()
+        weights = torch.load('../models_dict/quality_assessment/swint_best_model_3x3_dict.pth', map_location='cpu')
+        message = model.load_state_dict(weights)
+        logger.info(message)
+        # model = torch.load('../models_dict/quality_assessment/swint_best_model_3x3.pth')
+        data_transform = {
+            'inference': transforms.Compose([
+                transforms.Resize(384, interpolation=_pil_interp('bicubic')),
+                transforms.ToTensor(),
+                transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
+            ])
+        }
     else:
-        model = torch.load('../models/quality_assessment/seresnext101_6x6_all.pth')
+        model = torch.load('../models_dict/quality_assessment/seresnext101_6x6_all.pth')
+        data_transform = {"inference": transforms.Compose([transforms.Resize(224),
+                                                           transforms.ToTensor(),
+                                                           transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
+                          }
     model.to(device)
     logger.info('Model loads success!!!')
-    data_transform = {"inference": transforms.Compose([transforms.Resize(224),
-                                                       transforms.ToTensor(),
-                                                       transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
-                      }
     test_dataset = datasets.ImageFolder(root=test_dir, transform=data_transform["inference"])
     test_dict = test_dataset.imgs
     test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=0)
@@ -48,6 +61,7 @@ def inference(logger, size=None):
     model.eval()
     Pred = []
 
+    logger.info('COIPS quality assessment predicting...')
     with torch.no_grad():
         for batch_index, (x, label) in tqdm(enumerate(test_loader)):
             x, label = x.to(device), label.to(device)

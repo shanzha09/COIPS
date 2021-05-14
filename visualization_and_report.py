@@ -14,11 +14,8 @@ import os
 from tqdm import tqdm
 from COIPS.config import base_dir, project_name
 
-raw_pic_dir = os.path.join(base_dir, 'quality_assessment', 'gradable')
-nii_label_dir = os.path.join(base_dir, 'FAZ_segmentation', 'gradable', 'predict_label')
-mask_dir = os.path.join(base_dir, 'FAZ_segmentation', 'gradable', 'label_mask')
+
 csv_path = os.path.join(base_dir, 'report')
-maybe_mkdir(mask_dir)
 
 
 def raw_pic_convert(path):
@@ -81,28 +78,35 @@ def calculate_area(true_edge_length, edge_pixel, pixel_num):
 
 
 def mask_convert():
-    source_images = subfilename(raw_pic_dir, join=False, suffix='png')
-    for i in tqdm(source_images):
-        name = i.split('.')[0]
-        pic_path = os.path.join(raw_pic_dir, i)
-        nii_path = os.path.join(nii_label_dir, '{}.nii.gz'.format(name))
-        if os.path.isfile(nii_path):
-            # print(pic_path, nii_path)
-            pic = raw_pic_convert(path=pic_path)
-            mask = convert_nii_to_png(path=nii_path)
-            label_mask = Image.blend(pic, mask, 0.15)
-            label_mask.save(os.path.join(mask_dir, 'mask_{}.png'.format(name)))
+    for i in ['gradable', 'outstanding']:
+        raw_pic_dir = os.path.join(base_dir, 'quality_assessment', '{}'.format(i))
+        nii_label_dir = os.path.join(base_dir, 'FAZ_segmentation', '{}'.format(i), 'predict_label')
+        mask_dir = os.path.join(base_dir, 'FAZ_segmentation', '{}'.format(i), 'label_mask')
+        source_images = subfilename(raw_pic_dir, join=False, suffix='png')
+        maybe_mkdir(mask_dir)
+        for i in tqdm(source_images):
+            name = i.split('.')[0]
+            pic_path = os.path.join(raw_pic_dir, i)
+            nii_path = os.path.join(nii_label_dir, '{}.nii.gz'.format(name))
+            if os.path.isfile(nii_path):
+                # print(pic_path, nii_path)
+                pic = raw_pic_convert(path=pic_path)
+                mask = convert_nii_to_png(path=nii_path)
+                label_mask = Image.blend(pic, mask, 0.15)
+                label_mask.save(os.path.join(mask_dir, 'mask_{}.png'.format(name)))
 
 
 def report():
-    raw_nii_list = subFiles(nii_label_dir, suffix='.nii.gz')
-    for i in tqdm(raw_nii_list):
-        name = i.split('/')[-1].split('.')[0]
-        x, mask_pixel_num = get_nii(path=i)
-        area = calculate_area(3, x, mask_pixel_num)
-        cache = name + ',' + str(area) + '\n'
-        with open('{}/{}_FAZ_area.csv'.format(csv_path, project_name), 'a+') as f:
-            f.write(cache)
+    for i in ['gradable', 'outstanding']:
+        nii_label_dir = os.path.join(base_dir, 'FAZ_segmentation', '{}'.format(i), 'predict_label')
+        raw_nii_list = subFiles(nii_label_dir, suffix='.nii.gz')
+        for j in tqdm(raw_nii_list):
+            name = j.split('/')[-1].split('.')[0]
+            x, mask_pixel_num = get_nii(path=j)
+            area = calculate_area(3, x, mask_pixel_num)
+            cache = name + ',' + str(area) + '\n'
+            with open('{}/{}_FAZ_area_{}.csv'.format(csv_path, project_name, i), 'a+') as f:
+                f.write(cache)
 
 
 def main(logger):
