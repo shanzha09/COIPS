@@ -49,5 +49,16 @@ Firstly, we constructed a large-scale dataset made it public available. Then, we
 ## Usage 
 ### Prepare data
 The raw OCTA images that you want to process should be put into a folder named `raw_OCTA_images`.  
-The following formats are accepted: `_.png_`, `_.jpg_`, `_.tif_`.  
+The following formats are accepted: `.png`, `_jpg`, `.tif`.  
+  
+### Clone the COIPS and doenload the trained models  
+Install the requirement and clone this git, firstly. Then, download the trained models. The models are available [here]()  
+  
+### Check the config  
+You need to change the setting in configure  
+  
+### Run  
+`python COIP_system.py`
 
+## About the dataset  
+The datasets are public available, if you want to use the dataset, please send the e-mail to ``  to state that the datasets are only used for research.

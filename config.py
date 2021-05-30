@@ -4,8 +4,9 @@ author: shanzha
 WeChat: shanzhan09
 create_time: 2021/04/27 13:37
 """
-# project base dir
+# project base dir, where the 'raw_OCTA_images' is
 base_dir = '/media/wyf/dl/批量FAZ测量/黄斑6_6mm/Input/deep'
+# models dir
 model_dir = '/media/wyf/dl/eye/final_project/models_dict'
 # batch size
 batch_size = 32
