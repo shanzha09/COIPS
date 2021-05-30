@@ -25,12 +25,12 @@ for i in ['gradable', 'outstanding']:
 
 def main(logger):
     """Convert all 'gradable' and 'outstanding'  images to .nii.gz"""
-    for i in ['gradable', 'outstanding']:
+    for _i in ['gradable', 'outstanding']:
         FAZ_segmentation_dir = os.path.join(base_dir, 'FAZ_segmentation')
-        seg_dir = os.path.join(FAZ_segmentation_dir, '{}'.format(i))
+        seg_dir = os.path.join(FAZ_segmentation_dir, '{}'.format(_i))
         seg_nii_dir = os.path.join(seg_dir, 'predict_nii')
 
-        input_OCTA_images_dir = os.path.join(base_dir, 'quality_assessment', '{}'.format(i))
+        input_OCTA_images_dir = os.path.join(base_dir, 'quality_assessment', '{}'.format(_i))
         input_OCTA_images_list = subFiles(folder=input_OCTA_images_dir, suffix='.png')
 
         for path in input_OCTA_images_list:

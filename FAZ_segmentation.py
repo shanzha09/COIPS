@@ -7,18 +7,19 @@ from COIPS.utils import subfilename, join, load_pickle, maybe_mkdir, isfile, sub
 from multiprocessing import Pool
 import numpy as np
 from COIPS.config import overwrite_existing, pool_num
-from config import base_dir, model_dir
-
-
-model = os.path.join(model_dir, 'FAZ_segmentation', '6x6')
-folds = (0, 1, 2, 3, 4)
+from config import base_dir, model_dir, img_size
 
 
 def FAZ_segmentation(logger):
     """"""
+    if img_size == 3:
+        model_path = os.path.join(model_dir, 'FAZ_segmentation', '3x3')
+    else:
+        model_path = os.path.join(model_dir, 'FAZ_segmentation', '6x6')
+    folds = (0, 1, 2, 3, 4)
     logger.info("emptying cuda cache")
     torch.cuda.empty_cache()
-    expected_num_modalities = load_pickle(join(model, "plans.pkl"))['num_modalities']
+    expected_num_modalities = load_pickle(join(model_path, "plans.pkl"))['num_modalities']
     logger.info(expected_num_modalities)
     for i in ['gradable', 'outstanding']:
         FAZ_segmentation_dir = os.path.join(base_dir, 'FAZ_segmentation')
@@ -65,7 +66,7 @@ def FAZ_segmentation(logger):
 
                 logger.info("number of cases that still need to be predicted: {}".format(len(cleaned_output_files)))
 
-            trainer, params = load_model_and_checkpoint_files(model, folds, mixed_precision=None, checkpoint_name='model_best')
+            trainer, params = load_model_and_checkpoint_files(model_path, folds, mixed_precision=None, checkpoint_name='model_best')
 
             if 'segmentation_export_params' in trainer.plans.keys():
                 force_separate_z = trainer.plans['segmentation_export_params']['force_separate_z']

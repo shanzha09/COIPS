@@ -9,17 +9,19 @@ import os
 import torch
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
-from COIPS.config import base_dir, batch_size, project_name, img_size
+from COIPS.config import base_dir, batch_size, project_name, img_size, vascular_layer, model_dir
 from tqdm import tqdm
-from COIPS.utils import maybe_mkdir
+from COIPS.utils import maybe_mkdir, subfilename
 import shutil
 from timm.data.transforms import _pil_interp
 from SwinTransformer import build_SwinT
+from pre_processing import processed_png_folder0
 
 test_dir = os.path.join(base_dir, 'processed_OCTA_images')
 device = torch.device("cuda:0")
 
 report_dir = os.path.join(base_dir, 'report')
+
 quality_assessment_dir = os.path.join(base_dir, 'quality_assessment')
 ungradable_dir = os.path.join(quality_assessment_dir, 'ungradable')
 gradable_dir = os.path.join(quality_assessment_dir, 'gradable')
@@ -32,13 +34,12 @@ maybe_mkdir(outstanding_dir)
 
 
 def inference(logger, size=None):
-    assert size in [3, 6]
     if size == 3:
         model = build_SwinT.build_model()
-        weights = torch.load('../models_dict/quality_assessment/swint_best_model_3x3_dict.pth', map_location='cpu')
+        model_path = os.path.join(model_dir, 'quality_assessment', 'swint_best_model_3x3_dict.pth')
+        weights = torch.load(model_path, map_location='cpu')
         message = model.load_state_dict(weights)
         logger.info(message)
-        # model = torch.load('../models_dict/quality_assessment/swint_best_model_3x3.pth')
         data_transform = {
             'inference': transforms.Compose([
                 transforms.Resize(384, interpolation=_pil_interp('bicubic')),
@@ -47,7 +48,8 @@ def inference(logger, size=None):
             ])
         }
     else:
-        model = torch.load('../models_dict/quality_assessment/seresnext101_6x6_all.pth')
+        model_path = os.path.join(model_dir, 'quality_assessment', 'seresnext101_6x6_all.pth')
+        model = torch.load(model_path, map_location='cpu')
         data_transform = {"inference": transforms.Compose([transforms.Resize(224),
                                                            transforms.ToTensor(),
                                                            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
@@ -101,13 +103,23 @@ def move_to_assessment_folder():
                 shutil.copy(origin_path, target_path)
 
 
+def move_deep_image():
+    images_list = subfilename(processed_png_folder0, suffix='.png')
+    for i in images_list:
+        origin_path = os.path.join(processed_png_folder0, i)
+        target_path = os.path.join(gradable_dir, i)
+        shutil.move(origin_path, target_path)
+
+
 def main(logger):
     """
     This program assess the images in 'processed_OCTA_images' and move the images into subfolders 'ungradable',
      'gradale' and 'outstanding' in 'quality_assessment'
     """
-    if os.path.exists(test_dir):
-        inference(logger, size=img_size)
-        move_to_assessment_folder()
-        logger.info('COIPS quality assessment done!!!')
-
+    if vascular_layer == 0:
+        if os.path.exists(test_dir):
+            inference(logger, size=img_size)
+            move_to_assessment_folder()
+    else:
+        move_deep_image()
+    logger.info('COIPS quality assessment done!!!')

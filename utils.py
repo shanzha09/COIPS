@@ -57,7 +57,7 @@ def maybe_mkdir(path):
         os.mkdir(path)
 
 
-def subfilename(folder, join=True, prefix=None, suffix=None, sort=True):
+def subfilename(folder, join=False, prefix=None, suffix=None, sort=True):
     if join:
         l = os.path.join
     else:
