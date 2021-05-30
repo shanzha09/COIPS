@@ -13,7 +13,7 @@ from COIPS.utils import maybe_mkdir, subfilename, subFiles
 import os
 from tqdm import tqdm
 from COIPS.config import base_dir, project_name
-
+from COIPS.config import img_size
 
 csv_path = os.path.join(base_dir, 'report')
 
@@ -65,7 +65,7 @@ def get_nii(path):
 def calculate_area(true_edge_length, edge_pixel, pixel_num):
     """
     calculate mask true area
-    :param true_edge_length: true edge length i.e. mm, cm, m
+    :param true_edge_length: true edge length i.e. 3mm x 3mm
     :param edge_pixel: pixel length of the image i.e. 320 x 320
     :param pixel_num: mask pixel number
     :return: true area
@@ -103,7 +103,7 @@ def report():
         for j in tqdm(raw_nii_list):
             name = j.split('/')[-1].split('.')[0]
             x, mask_pixel_num = get_nii(path=j)
-            area = calculate_area(3, x, mask_pixel_num)
+            area = calculate_area(img_size, x, mask_pixel_num)
             cache = name + ',' + str(area) + '\n'
             with open('{}/{}_FAZ_area_{}.csv'.format(csv_path, project_name, i), 'a+') as f:
                 f.write(cache)

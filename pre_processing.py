@@ -9,6 +9,7 @@ from COIPS.utils import subFiles, maybe_mkdir
 from COIPS.config import base_dir
 import shutil
 import os
+from tqdm import tqdm
 
 raw_png_folder = os.path.join(base_dir, 'raw_OCTA_images')
 processed_png_folder = os.path.join(base_dir, 'processed_OCTA_images')
@@ -40,7 +41,7 @@ def main(logger):
     """
     for type_ in pic_type:
         pic_list = subFiles(folder=raw_png_folder, suffix=type_)
-        for pic in pic_list:
+        for pic in tqdm(pic_list):
             convert(img_path=pic, obj_type='png', target_dir=raw_png_folder)
     logger.info('All of images the format convert done!!!')
     png_list = subFiles(folder=raw_png_folder, suffix='.png')
