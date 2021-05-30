@@ -49,5 +49,5 @@ Firstly, we constructed a large-scale dataset made it public available. Then, we
 ## Usage 
 ### Prepare data
 The raw OCTA images that you want to process should be put into a folder named `raw_OCTA_images`.  
-The following formats are accepted: _.png_, _.jpg_, _.tif_.  
+The following formats are accepted: `_.png_`, `_.jpg_`, `_.tif_`.  
 
