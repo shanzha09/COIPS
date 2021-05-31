@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-author: shanzha
-WeChat: shanzhan09
-create_time: 2021/04/27 20:59
-"""
 import collections
 import SimpleITK as sitk
 from PIL import Image

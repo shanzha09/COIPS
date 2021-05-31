@@ -1,17 +1,18 @@
 # COIPS: Computer-aided OCTA Image Processing System
 ## Introduction
-_This is the implementation of ""_  
-This system is designed  to help ophthalmologist in quality assessment and FAZ segmantation of Optical Coherence Tomography angiography (OCTA) images based on deep learning. This system is able to transform OCTA image format, assess octa image quality, segment FAZ, quantify FAZ metrics and generate the result report automatically, which contributes to reducing the workload of ophthalmologists and saving their time.  
+_This is the office implementation of "A Deep Learning-based Quality Assessment and Segmentation System with a Large-scale Benchmark Dataset for Optical Coherence Tomographic Angiography Image"_  
+We developed the computer aided OCTA image processing system (COIPS) in our research.This system is designed  to help ophthalmologist in quality assessment and FAZ segmantation of Optical Coherence Tomography angiography (OCTA) images based on deep learning. This system is able to transform OCTA image format, assess octa image quality, segment FAZ, quantify FAZ metrics and generate the result report automatically, which contributes to reducing the workload of ophthalmologists and saving their time.  
+Our system show large generalization ability to be extended to all storage format OCTA images by conversion into unified PNG format for processing, assess and classify the images, segment and quantify FAZ and report the results automatically.  
 Firstly, we constructed a large-scale dataset made it public available. Then, we trained five quality assessment model: ResNet-101, Inception-V3, EfficientNet-B7, SE-ResNeXt-101 & Swin-Transformer-Large and one FAZ segmentation model: UNet based on nnU-Net framework.  
 **Quality assessment Dataset**  
 
 | | sOCTA-3x3-10k | sOCTA-6x6-14k |  
 |:----:| :----: | :----: |  
-|Training set| 6915 | 9409 |  
+|Training set| 6915 | 9292 |  
 |Testing set| 2965 | 4150 |  
 |External testing 1| 300 | 300 |  
 |External testing 2| 300 | 300 |  
-|Total| 10480 | 14159 |   
+|Total| 10480 | 14042 |   
   
 **FAZ segmentation Dataset**  
   
@@ -49,16 +50,20 @@ Firstly, we constructed a large-scale dataset made it public available. Then, we
 ## Usage 
 ### Prepare data
 The raw OCTA images that you want to process should be put into a folder named `raw_OCTA_images`.  
-The following formats are accepted: `.png`, `_jpg`, `.tif`.  
+The following formats of OCTA image are accepted: `.png`, `_jpg`, `.tif`.  
   
-### Clone the COIPS and doenload the trained models  
-Install the requirement and clone this git, firstly. Then, download the trained models. The models are available [here]()  
+### Clone the COIPS and download the trained models  
+Install the requirement and clone this git, firstly. Then, download the trained models. The models are available [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5074839.svg)](https://doi.org/10.5281/zenodo.5074839).  
   
 ### Check the config  
-You need to change the setting in configure  
-  
+You need to change the setting in configure  i.e., `config.py`
+
 ### Run  
-`python COIP_system.py`
+`python COIP_system.py`  
+
+### Result  
+please change dir to `report`
 
 ## About the dataset  
-The datasets are public available, if you want to use the dataset, please send the e-mail to ``  to state that the datasets are only used for research.
+The large-scale OCTA dataset is available at [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5075563.svg)](https://doi.org/10.5281/zenodo.5075563), [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5075429.svg)](https://doi.org/10.5281/zenodo.5075429).  
+These datasets are public available, if you use the dataset or our system in your research, please cite our paper `A Deep Learning-based Quality Assessment and Segmentation System with a Large-scale Benchmark Dataset for Optical Coherence Tomographic Angiography Image`. 

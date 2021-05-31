@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-author: shanzha
-WeChat: shanzhan09
-create_time: 2021/05/14 13:22
-"""
 from COIPS import pre_processing, quality_assessment, FAZ_segmentation, segmentation_processing, visualization_and_report
 from utils import logger_create
 from COIPS.config import vascular_layer, img_size

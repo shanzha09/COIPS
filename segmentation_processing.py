@@ -1,10 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-author: shanzha
-WeChat: shanzhan09
-create_time: 2021/04/27 16:02
-"""
-
 from nnunet.utilities.file_conversions import convert_2d_image_to_nifti
 from COIPS.config import base_dir
 from COIPS.utils import maybe_mkdir, subFiles

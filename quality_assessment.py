@@ -1,10 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-author: shanzha
-WeChat: shanzhan09
-create_time: 2021/04/27 14:14
-"""
-
 import os
 import torch
 from torch.utils.data import DataLoader
@@ -65,7 +59,7 @@ def inference(logger, size=None):
 
     logger.info('COIPS quality assessment predicting...')
     with torch.no_grad():
-        for batch_index, (x, label) in tqdm(enumerate(test_loader)):
+        for batch_index, (x, label) in tqdm(enumerate(test_loader), total=len(test_loader)):
             x, label = x.to(device), label.to(device)
 
             logits = model(x)

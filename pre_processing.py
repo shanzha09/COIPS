@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-author: shanzha
-WeChat: shanzhan09
-create_time: 2021/04/27 13:39
-"""
 import cv2
 from COIPS.utils import subFiles, maybe_mkdir
 from COIPS.config import base_dir
