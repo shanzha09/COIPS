@@ -67,3 +67,8 @@ please change dir to `report`
 ## About the dataset  
 The large-scale OCTA dataset is available at [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5111972.svg)](https://doi.org/10.5281/zenodo.5111972)， [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5111975.svg)](https://doi.org/10.5281/zenodo.5111975).  
 These datasets are public available, if you use the dataset or our system in your research, please cite our paper `A Deep Learning-based Quality Assessment and Segmentation System with a Large-scale Benchmark Dataset for Optical Coherence Tomographic Angiography Image`. 
+
+## Powered By
+The author would like to say thanks to:
+[Swin Transformer](https://github.com/microsoft/Swin-Transformer.git)
+[nnU-Net](https://github.com/MIC-DKFZ/nnUNet.git)
