@@ -53,7 +53,7 @@ The raw OCTA images that you want to process should be put into a folder named `
 The following formats of OCTA image are accepted: `.png`, `_jpg`, `.tif`.  
   
 ### Clone the COIPS and download the trained models  
-Install the requirement and clone this git, firstly. Then, download the trained models. The models are available [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5074839.svg)](https://doi.org/10.5281/zenodo.5074839).  
+Install the requirement and clone this git, firstly. Then, download the trained models. The models are available at [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5111976.svg)](https://doi.org/10.5281/zenodo.5111976).  
   
 ### Check the config  
 You need to change the setting in configure  i.e., `config.py`
@@ -65,5 +65,5 @@ You need to change the setting in configure  i.e., `config.py`
 please change dir to `report`
 
 ## About the dataset  
-The large-scale OCTA dataset is available at [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5075563.svg)](https://doi.org/10.5281/zenodo.5075563), [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5075429.svg)](https://doi.org/10.5281/zenodo.5075429).  
+The large-scale OCTA dataset is available at [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5111972.svg)](https://doi.org/10.5281/zenodo.5111972)， [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5111975.svg)](https://doi.org/10.5281/zenodo.5111975).  
 These datasets are public available, if you use the dataset or our system in your research, please cite our paper `A Deep Learning-based Quality Assessment and Segmentation System with a Large-scale Benchmark Dataset for Optical Coherence Tomographic Angiography Image`. 
