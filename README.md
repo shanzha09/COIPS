@@ -72,3 +72,14 @@ These datasets are public available, if you use the dataset or our system in you
 The author would like to say thanks to:  
 [Swin Transformer](https://github.com/microsoft/Swin-Transformer.git)  
 [nnU-Net](https://github.com/MIC-DKFZ/nnUNet.git)
+
+
+## Citation
+@misc{wang2021deep,
+      title={A Deep Learning-based Quality Assessment and Segmentation System with a Large-scale Benchmark Dataset for Optical Coherence Tomographic Angiography Image}, 
+      author={Yufei Wang and Yiqing Shen and Meng Yuan and Jing Xu and Bin Yang and Chi Liu and Wenjia Cai and Weijing Cheng and Wei Wang},
+      year={2021},
+      eprint={2107.10476},
+      archivePrefix={arXiv},
+      primaryClass={eess.IV}
+}
